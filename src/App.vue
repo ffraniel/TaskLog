@@ -21,11 +21,11 @@
         <v-layout
           text-center
           wrap
+          row 
+          child-flex
+          class="container-grid"
         >
-          <v-card
-            min-width="800"
-            class="mx-auto"
-          >
+          <v-card class="todo-card">
             <InputForm 
               v-on:add-todo="addTodo"
             />
@@ -185,12 +185,19 @@ export default {
 .remove-button {
   background-color: rgb(202, 22, 22);
   color: white;
-  margin: 10px 5px;
+  margin: 10px auto;
 }
 
 .loading {
   margin: 100px auto;
 
 }
+
+@media only screen and (max-width: 606px) {
+    .remove-button {
+      margin: 10px auto;
+    }
+}
+
 
 </style>
