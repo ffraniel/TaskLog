@@ -8,7 +8,11 @@
             type="checkbox" 
             v-model="todo.completed"
           />
-          <button name="delete" @click="$emit('delete', todo.id)">x</button>
+          <v-btn 
+            name="delete" 
+            @click="$emit('delete', todo.id)"
+            color="rgb(108, 204, 204)"
+          >x</v-btn>
         </p>
     </li>
   </ul>
@@ -32,7 +36,7 @@ export default {
     margin: 0 20px;
   }
   button {
-    background-color: rgb(250, 201, 201);
+    background-color: rgb(179, 245, 245);
     font-size: 1.75rem;
     width: 2.75rem;
     border-radius: 5px;

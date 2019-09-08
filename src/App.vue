@@ -14,7 +14,7 @@
       </v-btn>
     </v-app-bar>
 
-    <v-content>
+    <v-content v-if="!loading">
       <v-container>
         <h1>Add Todos</h1>
         <p>Click the task to mark it as complete</p>
@@ -74,7 +74,8 @@
         </v-layout>
       </v-container>
     </v-content>
-  
+    <h2 class="loading" v-if="loading">Loading</h2>
+    
   </v-app>
 </template>
 
@@ -134,6 +135,21 @@ export default {
       });
     }
   },
+  mounted: function () {
+    let storedTodos = window.localStorage.getItem('todos');
+    if (storedTodos) {
+      this.todos = JSON.parse(storedTodos);
+    }
+    this.loading = false;
+  },
+  watch: {
+    todos: {
+      handler: function () {
+        window.localStorage.setItem('todos', JSON.stringify(this.todos));
+      },
+      deep: true
+    }
+  },
   computed: {
     filteredTodos: function () {
       if (this.filtered === 'incomplete') {
@@ -171,4 +187,10 @@ export default {
   color: white;
   margin: 10px 5px;
 }
+
+.loading {
+  margin: 100px auto;
+
+}
+
 </style>
