@@ -35,8 +35,40 @@
               v-on:delete="deleteTodo"
               v-on:complete-todo="completeTodo"
             />
-        
+            <TodoList 
+              v-if="todos.length && filtered"
+              :todos="filteredTodos"
+              v-on:delete="deleteTodo"
+              v-on:complete-todo="completeTodo"
+            ></TodoList>
+          </v-card>
 
+          <v-card
+            height="150"  
+          >
+            <h4>Filters</h4>
+            <button 
+              class="button filter-button"
+              v-bind:class="{filterHighlight: this.filtered === null}"
+              @click="setFilter(null)"
+            >All</button>
+            <button 
+              class="button filter-button"
+              v-bind:class="{filterHighlight: this.filtered === 'complete'}"
+              @click="setFilter('complete')"
+            >Completed</button>
+            <button 
+              class="button filter-button"
+              v-bind:class="{filterHighlight: this.filtered === 'incomplete'}"
+              @click="setFilter('incomplete')"
+            >Incomplete</button>
+            <v-layout>
+              <button 
+                class="button remove-button"
+                v-if="todos.some(todo => todo.completed)"
+                @click="this.deleteCompleted"
+              >Remove Completed Tasks</button>
+            </v-layout>
           </v-card>
 
         </v-layout>
@@ -88,9 +120,55 @@ export default {
           return todo;
         }
       });
+    },
+    setFilter(filtered) {
+      if (filtered === this.filtered) {
+        this.filtered = null;
+      } else {
+        this.filtered = filtered;
+      }
+    },
+    deleteCompleted () {
+      this.todos = this.todos.filter(todo => {
+        return !todo.completed;
+      });
+    }
+  },
+  computed: {
+    filteredTodos: function () {
+      if (this.filtered === 'incomplete') {
+        return this.todos.filter((todo) => {
+          return !todo.completed;
+        });
+      } else if (this.filtered === 'complete') {
+        return this.todos.filter((todo) => {
+          return todo.completed;
+        });
+      } else {
+        return [];
+      }
     }
   }
 };
 </script>
 <style>
+.button {
+  margin: 0 5px;
+  font-size: 1rem;
+  padding: 5px 10px;
+  border-radius: 3px;
+}
+.filter-button {
+  background-color: rgb(182, 176, 176);
+  color: white;
+}
+.filterHighlight {
+  background: rgb(93, 228, 93);
+}
+
+.remove-button {
+  background-color: rgb(202, 22, 22);
+  color: white;
+  margin: 10px 5px;
+}
 </style>

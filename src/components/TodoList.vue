@@ -28,6 +28,9 @@ export default {
   ul p {
     font-size: 1.75rem;
   }
+  p input {
+    margin: 0 20px;
+  }
   button {
     background-color: rgb(250, 201, 201);
     font-size: 1.75rem;
